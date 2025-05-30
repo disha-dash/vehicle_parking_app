@@ -10,11 +10,12 @@ class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     full_name = db.Column(db.String(80), nullable=False)
+    phone_number = db.Column(db.String(15), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(35), nullable=False)
-    reserved = db.relationship('Reserve_Parking_Lot', backref='user')
+    password = db.Column(db.String(80), nullable=False)
+    role = db.Column(db.String(35), nullable=False, default='user')
+    reserved = db.relationship('Reserve_Parking_Spot', backref='user', foreign_keys="[Reserve_Parking_Spot.user_id]")
 
-    
 class Parking_Lot(db.Model):
     __tablename__ = 'parking_lots'
 
