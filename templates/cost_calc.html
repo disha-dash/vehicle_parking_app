@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Cost{% endblock %}
+
+{% block content %}
+    <div class="header">
+        <h1><b>COST</b></h1>
+    </div>
+    <form method="POST">
+        <label for="cost"><h2>Amount to be paid</h2></label>
+        <input type="text" name="cost" id="cost" value = "{{ cost }}">
+
+        <button type="submit">Pay at counter</button>
+    </form>
+    <br>
+{% endblock %}

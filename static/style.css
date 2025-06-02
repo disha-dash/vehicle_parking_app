@@ -1,38 +1,39 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background:#bbe4ed;
+    background:rgb(149, 197, 236); 
     margin: 0;
     padding: 0;
 }
 
 h1{
     text-align:center;
-    color:navy;
-    margin-top: 60px;
+    color:rgb(7, 7, 59);
+    margin-top: 50px;
 }
 
 h2 {
     text-align: center;
-    color:darkblue;
+    justify-content: center;
+    color:rgb(19, 19, 118);
     margin-top: 20px;
 }
 
 .rectangle {
   height: 200px;
   width: 300px;
-  background-color: #9cd7e6;
+  background-color: #426aba;;
   margin: 0 auto;
   margin-top: 60px;
   display: flex;              
   justify-content: center;    
   align-items: center;      
-  color: #4572a5;              
+  color: #3a6aa0;              
 }
 
 h3 {
     margin-top: 15px;
     text-align: center;
-    color:rgb(53, 83, 138)
+    color:rgb(23, 62, 135)
 }
 
 .button-link {
@@ -46,7 +47,7 @@ h3 {
 }
 
 form {
-    background: #536bae;
+    background: #426aba;
     max-width: 400px;
     margin: 40px auto;
     padding: 30px 20px;
@@ -67,24 +68,124 @@ input[type="number"],
 select {
     width: 100%;
     padding: 8px;
-    margin-bottom: 18px;
-    border: 1px solid #748ed1;
+    margin-bottom: 20px auto;
+    border: 1px solid #60a9ee;
     border-radius: 4px;
     box-sizing: border-box;
     text-align: center;
 }
 
 button[type="submit"] {
-    width: 100%;
+    width: fit-content;
     padding: 10px;
-    background: #83b4e7;
+    background: #57b8e5;
     color: #1b1818;
     border: none;
-    margin-top: 20px;
+    margin: 20px auto;
     border-radius: 4px;
     font-size: 16px;
+    display: block;
 }
 
 button[type="submit"]:hover {
-    background: #7eb0e5;
+    background: #44b1dc;
+}
+
+.header {
+    background-color:#426aba;   
+    color:rgb(2, 1, 1);             
+    padding: 15px;             
+    text-align: center;
+    font-size: 24px;
+}
+
+.parking_lot {
+    background-color: #bfdbf0;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.spot_grids {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.spot_boxes {
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    width: 110px;
+}
+
+.spot_boxes button {
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    width: 110px;
+    border: none;              
+}
+
+.spot_boxes button:hover {
+    background-color: #1a9964; 
+    color: rgb(162, 205, 233); 
+}
+
+.vacant {
+    background-color: #2fc151; 
+}
+
+.occupied {
+    background-color: #dd2235; 
+}
+
+.links a {
+  margin-right: 15px;
+  color:#1e2276;
+  text-decoration: none;
+}
+
+.style_table {
+    border: 2px solid rgb(26, 7, 77);
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.style_table th, .style_table td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid rgb(26, 7, 77);
+}
+
+.delete-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #df4646;
+    color: rgb(164, 201, 224);
+    border-radius: 5px;
+    margin-top: 20px;
+    text-align: right;
+    margin-right: 5%;
+}
+
+.form_button {
+    background:rgb(149, 197, 236); 
+    color:#2e9fd4;
+    margin-right: 5%;
+    text-align: right;
+    margin-top: 0%;
+    border: none;   
+    box-shadow: none;     
+}
+
+.spot_buttons {
+    background:rgb(149, 197, 236); 
+    text-align: center;
+    margin-top: 0%;
+    border: none;   
+    box-shadow: none;     
 }
