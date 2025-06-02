@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+        {% block title %}Delete Parking Lot{% endblock %}
+
+    {% block content %}
+    <div class="header">
+        <h1><b>DELETE PARKING LOT</b></h1>
+    </div>
+    <form class="form_button" method="POST">
+        <button type="submit" style="float: right; margin-right: 5%;">Delete lot?</button>
+    </form>
+    <h1>{{lot.location}}</h1>
+    <h2>{{lot.city}}</h2>
+    <h3>First 2 hours: ₹{{ lot.base_price }}</h3>
+    <h3>Per additional hour: ₹{{ lot.price }}</h3>
+    <h3>Parking Spots: {{ lot.max_spots }}</h3>
+
+    <h3>Vacant Spots: 
+        {{ lot.spot | selectattr("status", "equalto", Spot_status.vacant) | list | length }}
+
+    </h3>
+    <h3>Occupied Spots: 
+        {{ lot.spot | selectattr("status", "equalto", Spot_status.occupied) | list | length }}
+    </h3>
+
+    <div class="spot_grids">
+        {% for spot in lot.spot %}
+            <button class="spot_boxes {{ 'occupied' if spot.status.value == 'Occupied' else 'vacant' }}">
+                Spot id: {{ spot.spot_no }}<br>
+                {{ spot.status.value }}
+            </button>
+        {% endfor %}
+    </div>
+    <br>
+    <center><a href="{{ url_for('admin_dashboard') }}">Back to Admin Dashboard</a></center>
+    <br><br?
+    {% endblock %}

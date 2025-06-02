@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+    {% block title %}Admin Dashboard{% endblock %}
+    
+    {% block content %}
+    <div class="header">
+        <h1><b>ADMIN DASHBOARD</b></h1>
+        <h2>Welcome, admin</h2>
+        <div class="links" style="display: flex; justify-content: center; gap: 50px;" >
+            <a href="{{ url_for('create_lot') }}">Create Parking Lot</a>
+            <a href="{{ url_for('edit_del_lot') }}">Edit/Delete Parking Lot</a>
+            <a href="{{ url_for('registered_users')}}">Registered Users</a>
+            <a href="{{ url_for('admin_parking_history')}}">User Parking History</a>
+            <a href="{{ url_for('log_out') }}">Log Out</a>
+        </div>
+    </div>
+    <h2>Available Parking Lots</h2>
+    {% for lot in lots %}
+        <div class="parking_lot">
+            <h2>{{ lot.location }}</h2>
+            <h2>{{ lot.city }}</h2>
+            <h3>First 2 hours: ₹{{ lot.base_price }}</h3>
+            <h3>Per additional hour: ₹{{ lot.price }}</h3>
+            <h3>Parking Spots: {{ lot.max_spots }}</h3>
+        
+            <h3>Vacant Spots: 
+                {{ lot.spot | selectattr("status", "equalto", Spot_status.vacant) | list | length }}
+
+            </h3>
+            <h3>Occupied Spots: 
+                {{ lot.spot | selectattr("status", "equalto", Spot_status.occupied) | list | length }}
+            </h3>
+
+            <div class="spot_grids">
+                {% for spot in lot.spot %}
+                    <div class="spot_boxes {{ 'occupied' if spot.status.value == 'Occupied' else 'vacant' }}">
+                        Spot id: {{ spot.spot_no }}<br>
+                        {{ spot.status.value }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>  
+    {% endfor %}
+    {% endblock %}
+
+
+
+<!-- Create/edit/delete parking lots.
+View parking lot details and spot status.
+Automatically create parking spots based on the maximum capacity of the lot.
+Admin should see a list of all users and their details. (username, spot used etc.)-->

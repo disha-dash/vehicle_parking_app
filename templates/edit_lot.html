@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+    {% block title %}Edit Parking Lot{% endblock %}
+
+    {% block content %}
+        <div class="header">
+            <h1><b>EDIT PARKING LOT</b></h1>
+        </div>
+        <form action="{{ url_for('edit_lot', lot_id=lot.lot_id) }}" method="POST">
+            <label for="city">City:</label><br>
+            <input type="text" id="city" name="city" value="{{ lot.city }}" readonly>
+
+            <label for="location">Location:</label><br>
+            <input type="text" id="location" name="location" value="{{ lot.location }}" readonly>
+
+            <label for="base_price">Cost for the first 2 hours</label>
+            <input type="number" name="base_price" value="{{ lot.base_price }}" min="0"  step="5" required>
+            
+            <label for="price">Cost per additional hour</label>
+            <input type="number" name="price" value="{{ lot.price }}" min="0" step="1" required>
+
+            <button type="submit">Update</button>
+        </form>
+        <br>
+        <center><a href="{{ url_for('admin_dashboard') }}">Back to Admin Dashboard</a></center>
+        <br>
+    
+    {% endblock %}

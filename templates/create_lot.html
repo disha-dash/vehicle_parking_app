@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+        {% block title %}Create Parking Lot{% endblock %}
+
+    {% block content %}
+    <div class="header">
+        <h1><b>CREATE PARKING LOT</b></h1>
+    </div>
+    <form action="/create_lot", method="POST">
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" required>
+        <br>
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" required>
+        <br>
+        <label for="base_price">Cost for the first 2 hours</label>
+        <input type="range" id="base_price" name="base_price" min="0" max="60" step="5">
+        <span id="base_price_value">30</span>
+        <label for="price">Cost per additional hour:</label>
+        <input type="range" id ='price' name="price" min="0" max="20" step="1">
+        <span id="price_value">10</span>
+        <br>
+        <label for="max_spots">Maximum number of parking spots in given lot</label>
+        <input type="number" name="max_spots" min="0" max="150" step="1">
+        <br>
+        <button type="submit">Create!</button>
+    </form>
+    <script>
+        const slider_base = document.getElementById("base_price");          //for base price slider
+        const output_base = document.getElementById("base_price_value");
+
+        output_base.textContent = slider_base.value;
+
+        slider_base.oninput = function() 
+        {
+            output_base.textContent = this.value;
+        };
+
+
+        const slider_additional = document.getElementById("price");          //for additional hours price slider
+        const output_additional = document.getElementById("price_value");
+
+        output_additional.textContent = slider_additional.value;
+
+        slider_additional.oninput = function() 
+        {
+            output_additional.textContent = this.value;
+        };
+    </script>
+    <center><a href="{{ url_for('admin_dashboard') }}">Back to Admin Dashboard</a></center>
+    {% endblock %}

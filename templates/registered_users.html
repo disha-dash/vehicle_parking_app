@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registered Users</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="header">
+        <h1><b>REGISTERED USERS</b></h1>
+    </div>
+    <table class="style_table">
+        <tr>
+            <th>ID</th><th>Username</th><th>Full Name</th><th>Phone Number</th><th>Email</th><th>Spot_id</th>
+        </tr>
+        {% for user in users %}
+            {% if user.username!="admin" %}
+                <tr>
+                    <td>{{user.user_id-1}}</td>
+                    <td>{{user.username}}</td>
+                    <td>{{user.full_name}}</td>
+                    <td>{{user.phone_number}}</td>
+                    <td>{{user.email}}</td>
+                    {% if user.reserve %}
+                        {% for r in user.reserve %}
+                            {% if r.is_active==True %}
+                                <td>{{ r.spot.spot_id }}</td>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <td>N/A</td>
+                    {% endif %}
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+    <br><br>
+    <center><a href="{{ url_for('admin_dashboard') }}">Back to Admin Dashboard</a></center>
+</body>
+</html>
+
