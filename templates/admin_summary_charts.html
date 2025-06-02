@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Summary Charts{% endblock %}
+
+{% block content %}
+    <div class="header">
+        <h1><b>SUMMARY CHARTS</b></h1>
+    </div>
+    <br>
+    <h2>Spots occupied per User</h2>
+    <img src="data:image/png;base64,{{ plot_url1 }}" alt="Spots occupied per User">
+    <br>
+    <h2>Spots occupied per Parking Lot</h2>
+    <img src="data:image/png;base64,{{ plot_url2 }}" alt="Spots occupied per Lot">
+
+    <br>
+    <a href="{{ url_for('admin_dashboard') }}"><center>Back to Admin Dashboard</center></a>
+    <br>
+{% endblock %}

@@ -3,6 +3,10 @@ from sqlalchemy import or_
 from models import db, User, Parking_Lot, Spot_status, Parking_Spot, Reserve_Parking_Spot
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+from matplotlib import pyplot as plt
+import io
+import base64
+import numpy as np
 
 app = Flask(__name__)
 
@@ -299,6 +303,79 @@ def log_out():
     if request.method=="POST":
         return redirect(url_for( "homepage" ))
     return render_template("log_out.html")
+
+@app.route('/admin_summary_charts')
+def admin_summary_charts():
+    users = User.query.all()
+    usernames = [user.username for user in users if user.username!="admin"]
+
+    spots_per_user = [ Reserve_Parking_Spot.query.filter_by(user_id=user.user_id).count()
+    for user in users if user.username != "admin" ]
+    fig1, ax1 = plt.subplots()
+    ax1.bar(usernames, spots_per_user, color='navy')
+    ax1.set_title('Number of Spots Occupied per User')
+    ax1.set_xlabel('Usernames')
+    ax1.set_ylabel('Spots')
+    max_spots_per_user = max(spots_per_user) if spots_per_user else 0
+    yticks = np.arange(0, max_spots_per_user+2, 2)  
+    ax1.set_yticks(yticks)
+    img1 = io.BytesIO()
+    fig1.tight_layout()
+    fig1.savefig(img1, format='png')
+    img1.seek(0)
+    plot_url1 = base64.b64encode(img1.getvalue()).decode()
+
+    lots = Parking_Lot.query.all()
+    locations = []
+    spots_per_lot = []
+
+    for lot in lots:
+        locations.append(lot.location)
+        count = Reserve_Parking_Spot.query.filter_by(lot_id=lot.lot_id).count()
+        spots_per_lot.append(count)
+
+    fig2, ax2 = plt.subplots()
+    ax2.bar(locations, spots_per_lot, color='navy')
+    ax2.set_title('Spots Occupied per Lot')
+    ax2.set_xlabel('Location')
+    ax2.set_ylabel('Spots')
+    max_spots_per_lot = max(spots_per_lot) if spots_per_lot else 0
+    yticks = np.arange(0, max_spots_per_lot+2, 2)  
+    ax2.set_yticks(yticks)
+    img2 = io.BytesIO()
+    fig2.tight_layout()
+    fig2.savefig(img2, format='png')
+    img2.seek(0)
+    plot_url2 = base64.b64encode(img2.getvalue()).decode()
+    return render_template('admin_summary_charts.html', plot_url1=plot_url1, plot_url2=plot_url2)
+
+@app.route('/user_summary_charts')
+def user_summary_charts():
+    user_id = session.get('user_id')
+    lots = Parking_Lot.query.all()
+
+    locations = []
+    spots_per_lot = []
+
+    for lot in lots:
+        locations.append(lot.location)
+        count = Reserve_Parking_Spot.query.filter_by(lot_id=lot.lot_id, user_id = user_id).count()
+        spots_per_lot.append(count)
+
+    fig3, ax3 = plt.subplots()
+    ax3.bar(locations, spots_per_lot, color='navy')
+    ax3.set_title('Spots Occupied per Lot')
+    ax3.set_xlabel('Location')
+    ax3.set_ylabel('Spots')
+    max_spots_per_lot = max(spots_per_lot) if spots_per_lot else 0
+    yticks = np.arange(0, max_spots_per_lot+2, 2)  
+    ax3.set_yticks(yticks)
+    img3 = io.BytesIO()
+    fig3.tight_layout()
+    fig3.savefig(img3, format='png')
+    img3.seek(0)
+    plot_url3 = base64.b64encode(img3.getvalue()).decode()
+    return render_template('user_summary_charts.html', plot_url3=plot_url3)
 
 if __name__ == '__main__':
     app.run(debug=True)

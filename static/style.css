@@ -189,3 +189,12 @@ button[type="submit"]:hover {
     border: none;   
     box-shadow: none;     
 }
+
+img {
+    width: 85%;
+    max-width: 750px;
+    padding: 25px;
+    display: block;
+    margin: 20px auto;
+    border: 5px solid #a4d9db;
+}

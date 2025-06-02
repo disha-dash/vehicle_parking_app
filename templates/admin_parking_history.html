@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="header">
+        <h1><b>PARKING HISTORY</b></h1>
+    </div>
+    <table class="style_table">
+        <tr>
+            <th>User Id</th><th>Location</th><th>City</th><th>Spot No</th><th>Status</th><th>Parking time</th><th>Leaving time</th><th>Duration</th><th>Cost</th>
+        </tr>
+        {% for r in reserved_spots %}
+           <tr>
+            <td>{{ r.user_id }}</td>
+            <td>{{ r.lot.location }}</td>
+            <td>{{ r.lot.city }}</td>
+            <td>{{ r.spot.spot_no }}</td>
+            <td>{{ r.status.value }}</td>
+            <td>{{ r.parking_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            <td>{{ r.leaving_time.strftime('%Y-%m-%d %H:%M:%S') if r.leaving_time else '-' }}</td>
+            <td>{{ r.duration if r.leaving_time else '-' }} hrs</td>
+            <td>{{ r.cost if r.leaving_time else '-' }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <center><a href="{{ url_for('admin_dashboard') }}">Back to Admin Dashboard</a></center>
+    <br>
+</body>
+</html>
