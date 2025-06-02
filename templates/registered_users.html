@@ -22,15 +22,13 @@
                     <td>{{user.full_name}}</td>
                     <td>{{user.phone_number}}</td>
                     <td>{{user.email}}</td>
-                    {% if user.reserve %}
-                        {% for r in user.reserve %}
-                            {% if r.is_active==True %}
-                                <td>{{ r.spot.spot_id }}</td>
-                            {% endif %}
-                        {% endfor %}
-                    {% else %}
-                        <td>N/A</td>
-                    {% endif %}
+                    {% set active_spot=None %}
+                    {% for r in user.reserve %}
+                        {% if r.is_active==True %}
+                            {% set active_spot = r %}
+                        {% endif %}
+                    {% endfor %}
+                    <td>{{ active.spot.spot_id if active_spot else 'N/A' }}</td>
                 </tr>
             {% endif %}
         {% endfor %}
