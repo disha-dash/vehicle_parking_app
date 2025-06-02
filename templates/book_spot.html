@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+    {% block title %}Book Spot{% endblock %}
+    
+    {% block content %}
+    <div class="header">
+        <h1><b>BOOK SPOT</b></h1>
+    </div>
+    <form class="form_button" action="{{ url_for('book_spot', lot_id=lot.lot_id)}}" method="POST">
+        <button type="submit" style="float: right; margin-right: 5%;">Book spot?</button>
+    </form>
+    <h1>{{lot.location}}</h1>
+    <h2>{{lot.city}}</h2>
+    <h3>First 2 hours: ₹{{ lot.base_price }}</h3>
+    <h3>Per additional hour: ₹{{ lot.price }}</h3>
+    <h3>Parking Spots: {{ lot.max_spots }}</h3>
+
+    <h3>Vacant Spots: 
+        {{ lot.spot | selectattr("status", "equalto", Spot_status.vacant) | list | length }}
+
+    </h3>
+    <h3>Occupied Spots: 
+        {{ lot.spot | selectattr("status", "equalto", Spot_status.occupied) | list | length }}
+    </h3>
+
+    <div class="spot_grids">
+    {% for spot in lot.spot %}
+        <div class="spot_boxes 
+            {% if spot.status.value == 'Occupied' %}
+                occupied
+            {% else %}
+                vacant
+            {% endif %}">
+            Spot id: {{ spot.spot_no }}<br>
+            {{ spot.status.value }}
+        </div>
+    {% endfor %}
+    </div>
+    <br>
+        <center><a href="{{ url_for('user_dashboard') }}">Back to User Dashboard</a></center>
+    <br>
+    {% endblock %}
+
+

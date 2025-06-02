@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Release Spot{% endblock %}
+
+{% block content %}
+    <div class="header">
+        <h1><b>RELEASE SPOT</b></h1>
+    </div>
+    <form method="POST">
+        <label for="location">Location:</label>
+        <input type="text" name="location" id="location" value= "{{ spot.lot.location }}" readonly><br>
+
+        <label for="city">City:</label>
+        <input type="text" name="city" id="city" value= "{{ spot.lot.city }}" readonly><br>
+
+        <label for="spot_no">Spot No:</label>
+        <input type="text" name="spot_no" id="spot_no" value= "{{ spot.spot_no }}" readonly><br>
+        <button type="submit">Release</button>
+    </form>
+    <br>
+    <a href="{{ url_for('user_dashboard') }}"><center>Back to User Dashboard</center></a>
+    <br>
+{% endblock %}

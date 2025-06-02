@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+    {% block title %}User Dashboard{% endblock %}
+    
+    {% block content %}
+    <div class="header">
+        <h1><b>USER DASHBOARD</b></h1>
+        <h2>Welcome, {{ username }}</h2>
+        <div class="links" style="display: flex; justify-content: center; gap: 75px;" >
+            {% if is_active==False %}
+                <a href="{{ url_for('select_lot')}}">Book Spot</a>
+            {% else %}
+                <span style="color: grey;"><strikethrough>Book spot</strikethrough></span>
+            {% endif %}
+            {% if is_active==True %}
+                <a href="{{ url_for('release_spot', spot_id=spot_id) }}">Release Spot</a>
+            {% else %}
+                <span style="color: grey;"><strikethrough>Release spot</strikethrough></span>
+            {% endif %}
+            <a href="{{ url_for('user_parking_history')}}">View Parking History</a>
+            <a href="{{ url_for('log_out') }}">Log Out</a>
+        </div>
+    </div>
+    <br>
+    <h2>Available Parking Lots</h2>
+    {% for lot in lots %}
+        <div class="parking_lot">
+            <h2>{{ lot.location }}</h2>
+            <h2>{{ lot.city }}</h2>
+            <h3>First 2 hours: ₹{{ lot.base_price }}</h3>
+            <h3>Per additional hour: ₹{{ lot.price }}</h3>
+            <h3>Parking Spots: {{ lot.max_spots }}</h3>
+        
+            <h3>Vacant Spots: 
+                {{ lot.spot | selectattr("status", "equalto", Spot_status.vacant) | list | length }}
+
+            </h3>
+            <h3>Occupied Spots: 
+                {{ lot.spot | selectattr("status", "equalto", Spot_status.occupied) | list | length }}
+            </h3>
+
+            <div class="spot_grids">
+                {% for spot in lot.spot %}
+                    <div class="spot_boxes {{ 'occupied' if spot.status.value == 'Occupied' else 'vacant' }}">
+                        Spot id: {{ spot.spot_no }}<br>
+                        {{ spot.status.value }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>  
+    {% endfor %}
+    {% endblock %}
+
+<!-- View available parking lots.
+Auto-allocation/Reservation of the first available spot.
+Occupy a spot (update status - note timestamp)
+Release a spot (update status - note timestamp).
+Track timestamps for reservation and View parking history.-->

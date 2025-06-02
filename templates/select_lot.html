@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+        {% block title %}Select Parking Lot{% endblock %}
+
+    {% block content %}
+    <div class="header">
+        <h1><b>SELECT PARKING LOT</b></h1>
+    </div>
+    <form action="/select_lot" method="POST">
+        <div>
+            <label for="city">Select City:</label><br>
+            <select name="city" id="city" required>
+                <option value="" disabled selected>--Choose a City--</option>
+                {% for city in cities %}
+                    <option value="{{ city }}">{{ city }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="location">Select Location:</label>
+            <select name="location" id="location" required><br>
+                <option value="" disabled selected>--Choose Location--</option>
+                {% for lot in lots %}
+                    <option value="{{ lot.location }}" data-city="{{ lot.city }}">{{ lot.location }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <button type="submit">Book</button>
+        </div>
+    </form>
+
+    <script>
+        const select_city = document.getElementById("city");
+        const select_loc = document.getElementById("location");
+
+        //all original location options
+        const locations = Array.from(select_loc.options).filter(opt => opt.value !== "");
+
+        select_city.addEventListener("change", () => {
+
+            // filtered location dropdown (unique location valuse only)
+            select_loc.innerHTML = `<option value="" disabled selected>--Choose Location--</option>`;
+
+            // filter locations based on city they are made in
+            locations.forEach(option => {
+                if (option.dataset.city === select_city.value) {
+                    select_loc.appendChild(option.cloneNode(true));
+                }
+            });
+        });
+    </script>
+    {% endblock %}
