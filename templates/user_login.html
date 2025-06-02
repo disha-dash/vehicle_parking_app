@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>User Login Page</title>
-        <link rel="stylesheet" href="../static/style.css">
-    </head>
-    <body>
+{% extends "base.html" %}
+
+        {% block title %}User Login Page{% endblock %}
+        
+        {% block content %}
         <div>
             <h1><b>USER LOGIN</b></h1>
             <form action="/user_login" method="POST">
@@ -20,8 +16,8 @@
             </form>
             <h3>Don't have an account?</h3>
             <div style="text-align:center;">
-            <a href="{{ url_for('register') }}" target="_self">Create Account/ Sign up</a>
+            <a href="{{ url_for('register') }}">Create Account/ Sign up</a>
             </div>
         </div>
-    </body>
-</html>
+        {% endblock %}
+    
