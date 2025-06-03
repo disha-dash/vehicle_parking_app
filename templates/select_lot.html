@@ -8,8 +8,8 @@
     </div>
     <form action="/select_lot" method="POST">
         <div>
-            <label for="city">Select City:</label><br>
-            <select name="city" id="city" required>
+            <label for="city">Select City:</label>
+            <select name="city" id="city" required><br>
                 <option value="" disabled selected>--Choose a City--</option>
                 {% for city in cities %}
                     <option value="{{ city }}">{{ city }}</option>
@@ -18,8 +18,8 @@
         </div>
         <div>
             <label for="location">Select Location:</label>
-            <select name="location" id="location" required><br>
-                <option value="" disabled selected>--Choose Location--</option>
+            <select name="location" id="location" required>
+                <option value="" disabled selected>--Choose Location--</option><br>
                 {% for lot in lots %}
                     <option value="{{ lot.location }}" data-city="{{ lot.city }}">{{ lot.location }}</option>
                 {% endfor %}
