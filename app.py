@@ -225,17 +225,18 @@ def release_spot(spot_id):
         reserved_spot.duration = int(hours)
 
         print("Duration to store:", reserved_spot.duration, type(reserved_spot.duration))
-        
-        db.session.commit()
 
         print(reserved_spot.duration)
 
-        if reserved_spot.duration>2:
-            cost=reserved_spot.cost + ((reserved_spot.duration-2)*price)
+        if reserved_spot.duration>=2:
+            cost=reserved_spot.cost + ((reserved_spot.duration-1)*price)
+            reserved_spot.cost = cost
+            db.session.commit()
             flash(f"Spot {spot.spot_no} released successfully!", "success")
             return redirect(url_for('cost_calc', cost=cost ))
         else:
             cost=reserved_spot.cost
+            db.session.commit()
             flash(f"Spot {spot.spot_no} released successfully!", "success")
             return redirect(url_for('cost_calc', cost=cost))
     return render_template("release_spot.html", spot_id=spot_id, spot = spot)
