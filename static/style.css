@@ -36,16 +36,6 @@ h3 {
     color:rgb(23, 62, 135)
 }
 
-.button-link {
-    display: inline-block;
-    background-color: #4572a5;
-    color: rgb(2, 1, 1);
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-top: 20px;
-}
-
 form {
     background: #426aba;
     max-width: 400px;
@@ -161,16 +151,6 @@ button[type="submit"]:hover {
     border: 1px solid rgb(26, 7, 77);
 }
 
-.delete-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #df4646;
-    color: rgb(164, 201, 224);
-    border-radius: 5px;
-    margin-top: 20px;
-    text-align: right;
-    margin-right: 5%;
-}
 
 .form_button {
     background:rgb(149, 197, 236); 
