@@ -286,7 +286,7 @@ def del_lot(lot_id):
 
         # Check if all are vacant
         if any(spot.status != Spot_status.vacant for spot in spots):
-            flash("Cannot reduce max spots. Some spots beyond the new limit are not vacant.", "danger")
+            flash("Cannot delete parking lot. It is not vacant.", "danger")
             return redirect(url_for("del_lot", lot_id=lot_id))
         
         for spot in spots:
