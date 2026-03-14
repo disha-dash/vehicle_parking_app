@@ -281,17 +281,26 @@ def edit_lot(lot_id):
 @app.route("/del_lot/<int:lot_id>", methods=["GET", "POST"])
 def del_lot(lot_id):
     lot = Parking_Lot.query.get(lot_id)
-    if request.method=="POST":
+    if request.method == "POST":
         spots = [spot for spot in lot.spot]
 
-        # Check if all are vacant
+        # Check for any active reservations for this lot (to prevent deletion if reservations exist)
+        reservations = Reserve_Parking_Spot.query.filter_by(lot_id=lot_id).all()
+    
+        # Check if all spots are vacant (existing check)
         if any(spot.status != Spot_status.vacant for spot in spots):
-            flash("Cannot delete parking lot. It is not vacant.", "danger")
+            flash("Cannot delete lot. Some spots are not vacant.", "danger")
             return redirect(url_for("del_lot", lot_id=lot_id))
-        
+
+        # Delete all reservations for the lot (though we already checked above, this is a safeguard)
+        for reservation in reservations:
+            db.session.delete(reservation)
+
+        # Delete spots
         for spot in spots:
             db.session.delete(spot)
 
+        # Delete the lot
         db.session.delete(lot)
 
         db.session.commit()
